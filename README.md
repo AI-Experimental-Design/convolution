@@ -18,3 +18,19 @@ An O does not have diagnoal lines
 |-|-|-|-|-|
 | ![](img/xo/o.png) | ![](img/xo/kernel_back_diagonal.png)| ![](img/xo/o.kernel_back_diagonal.png)| 2.0 | 0.83 |
 | ![](img/xo/o.png) | ![](img/xo/kernel_fwd_diagonal.png) | ![](img/xo/o.kernel_fwd_diagonal.png) | 2.0 | 0.83 |
+
+An O has curves.
+| Input | Kernel | Feature Map | max | mean |
+|-|-|-|-|-|
+| ![](img/xo/o.png) | ![](img/xo/kernel_topl_curve.png)| ![](img/xo/o.kernel_topl_curve.png) | 4.0 | 1.4 |
+| ![](img/xo/o.png) | ![](img/xo/kernel_botr_curve.png) | ![](img/xo/o.kernel_botr_curve.png)| 4.0 | 1.4 |
+
+
+An X does not have curves.
+| Input | Kernel | Feature Map | max | mean |
+|-|-|-|-|-|
+| ![](img/xo/x.png) | ![](img/xo/kernel_topl_curve.png)| ![](img/xo/o.kernel_topl_curve.png) | 3.0 | 1.3 |
+| ![](img/xo/x.png) | ![](img/xo/kernel_botr_curve.png) | ![](img/xo/o.kernel_botr_curve.png)| 3.0 | 1.3 |
+
+
+
