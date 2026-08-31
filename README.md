@@ -32,5 +32,13 @@ An X does not have curves.
 | ![](img/xo/x.png) | ![](img/xo/kernel_topl_curve.png)| ![](img/xo/o.kernel_topl_curve.png) | 3.0 | 1.3 |
 | ![](img/xo/x.png) | ![](img/xo/kernel_botr_curve.png) | ![](img/xo/o.kernel_botr_curve.png)| 3.0 | 1.3 |
 
+X has a set pixel in the corner.
+| Input | Kernel | Feature Map | max | mean |
+|-|-|-|-|-|
+| ![](img/xo/x.png) | ![](img/xo/kernel_set_corner.png)| ![](img/xo/o.kernel_set_corner.png) | 1.0 | 0.33 |
+| ![](img/xo/o.png) | ![](img/xo/kernel_set_corner.png) | ![](img/xo/o.kernel_set_corner.png)| 1.0 | 0.4 |
+
+
+
 
 
