@@ -14,5 +14,7 @@ An X has diagnoal lines
 
 An O does not have diagnoal lines
 
+| Input | Kernel | Feature Map | max | mean |
+|-|-|-|-|-|
 | ![](img/xo/o.png) | ![](img/xo/kernel_back_diagonal.png)| ![](img/xo/o.kernel_back_diagonal.png)| 2.0 | 0.83 |
 | ![](img/xo/o.png) | ![](img/xo/kernel_fwd_diagonal.png) | ![](img/xo/o.kernel_fwd_diagonal.png) | 2.0 | 0.83 |
