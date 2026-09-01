@@ -46,6 +46,7 @@ We want to know if an image has an X or an O.
 
 ## Train
 
+### Data Augmentation
 Since we do not have a dataset of Xs and Os, we can use data augmentation to
 create a training set.  We can take in our X and O and move them around.
 
