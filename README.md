@@ -56,7 +56,8 @@ create a training set.  We can take in our X and O and move them around.
 |![](img/xo/x.png)| ![](out/xo/demo_set/xs.png) |
 
 <details>
-```
+
+```bash
 python src/make_xo_dataset.py \
     -o out/xo/demo_set/ \
     --x_path data/xo/inputs/x.txt \
@@ -80,5 +81,6 @@ magick $os +append  out/xo/demo_set/os.png
 xs=$(ls out/xo/demo_set/x_*png)
 magick $xs +append  out/xo/demo_set/xs.png
 ```
+
 </details>
 
