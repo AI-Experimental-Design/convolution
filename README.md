@@ -29,6 +29,45 @@ An X has diagonal lines
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_back_diagonal.png" style="height: 1in;"> | <img src="img/xo/x.kernel_back_diagonal.png" style="height: 1in;"> | 3.0 | 1.67 |
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_fwd_diagonal.png" style="height: 1in;"> | <img src="img/xo/x.kernel_fwd_diagonal.png" style="height: 1in;"> | 3.0 | 1.67 |
 
+<details>
+
+```
+python src/img_conv.py \
+    -i data/xo/inputs/x.txt \
+    -k data/xo/kernels/kernel_back_diagonal.txt \
+    -o out/xo/x.kernel_back_diagonal.txt
+Scores:
+  Max pooling  : 3.000000
+  Mean pooling : 1.166667
+
+After sigmoid (probability of X):
+  Max pooling  : 0.952574
+  Mean pooling : 0.762542
+
+python src/make_img.py \
+    -i out/xo/x.kernel_back_diagonal.txt \
+    -o img/xo/x.kernel_back_diagonal.png
+
+python src/img_conv.py \
+    -i data/xo/inputs/x.txt \
+    -k data/xo/kernels/kernel_fwd_diagonal.txt \
+    -o out/xo/x.kernel_fwd_diagonal.txt
+Scores:
+  Max pooling  : 3.000000
+  Mean pooling : 1.166667
+
+After sigmoid (probability of X):
+  Max pooling  : 0.952574
+  Mean pooling : 0.762542
+
+python src/make_img.py \
+    -i out/xo/x.kernel_fwd_diagonal.txt \
+    -o img/xo/x.kernel_fwd_diagonal.png
+```
+
+</details>
+
+
 An O does not have diagonal lines
 
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
@@ -58,6 +97,11 @@ X has a set pixel in the corner.
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/o.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.4 |
 
 ## Training
+
+Real inputs have subtle and complex features nd guessing good kernel values by
+hand doesn't scale. Instead of designing kernels, we can learn them directly
+from examples.
+
 ### Generate training set
 #### Data Augmentation
 Since we do not have a dataset of Xs and Os, we can use data augmentation to
