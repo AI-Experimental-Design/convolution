@@ -75,12 +75,88 @@ An O does not have diagonal lines
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_back_diagonal.png" style="height: 1in;"> | <img src="img/xo/o.kernel_back_diagonal.png" style="height: 1in;"> | 2.0 | 0.83 |
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_fwd_diagonal.png" style="height: 1in;"> | <img src="img/xo/o.kernel_fwd_diagonal.png" style="height: 1in;"> | 2.0 | 0.83 |
 
+<details>
+
+```
+python src/img_conv.py \
+    -i data/xo/inputs/o.txt \
+    -k data/xo/kernels/kernel_back_diagonal.txt \
+    -o out/xo/o.kernel_back_diagonal.txt
+Scores:
+  Max pooling  : 2.000000
+  Mean pooling : 0.833333
+
+After sigmoid (probability of X):
+  Max pooling  : 0.880797
+  Mean pooling : 0.697059
+
+python src/make_img.py \
+    -i out/xo/o.kernel_back_diagonal.txt \
+    -o img/xo/o.kernel_back_diagonal.png
+
+python src/img_conv.py \
+    -i data/xo/inputs/o.txt \
+    -k data/xo/kernels/kernel_fwd_diagonal.txt \
+    -o out/xo/o.kernel_fwd_diagonal.txt
+Scores:
+  Max pooling  : 2.000000
+  Mean pooling : 0.833333
+
+After sigmoid (probability of X):
+  Max pooling  : 0.880797
+  Mean pooling : 0.697059
+
+python src/make_img.py \
+    -i out/xo/o.kernel_fwd_diagonal.txt \
+    -o img/xo/o.kernel_fwd_diagonal.png
+```
+
+</details>
+
 An O has curves.
 
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_topl_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_topl_curve.png" style="height: 1in;"> | 4.0 | 1.4 |
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_botr_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_botr_curve.png" style="height: 1in;"> | 4.0 | 1.4 |
+
+<details>
+
+```
+python src/img_conv.py \
+    -i data/xo/inputs/o.txt \
+    -k data/xo/kernels/kernel_topl_curve.txt \
+    -o out/xo/o.kernel_topl_curve.txt
+Scores:
+  Max pooling  : 4.000000
+  Mean pooling : 1.416667
+
+After sigmoid (probability of X):
+  Max pooling  : 0.982014
+  Mean pooling : 0.804815
+
+python src/make_img.py \
+    -i out/xo/o.kernel_topl_curve.txt \
+    -o img/xo/o.kernel_topl_curve.png
+
+python src/img_conv.py \
+    -i data/xo/inputs/o.txt \
+    -k data/xo/kernels/kernel_botr_curve.txt \
+    -o out/xo/o.kernel_botr_curve.txt
+Scores:
+  Max pooling  : 4.000000
+  Mean pooling : 1.416667
+
+After sigmoid (probability of X):
+  Max pooling  : 0.982014
+  Mean pooling : 0.804815
+
+python src/make_img.py \
+    -i out/xo/o.kernel_botr_curve.txt \
+    -o img/xo/o.kernel_botr_curve.png
+```
+
+</details>
 
 An X does not have curves.
 
