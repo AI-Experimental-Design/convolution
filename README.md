@@ -175,8 +175,8 @@ An X does not have curves.
 
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
-| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_topl_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_topl_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
-| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_botr_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_botr_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_topl_curve.png" style="height: 1in;"> | <img src="img/xo/x.kernel_topl_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
+| <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_botr_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_botr_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
 
 <details>
 
@@ -518,6 +518,4 @@ done
 ```
 
 </details>
-
-## More Kernels
 
