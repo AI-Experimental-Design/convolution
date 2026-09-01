@@ -1,30 +1,45 @@
-We want to know if an image has an X or an O.
+# Convolution
+
+Convolution provides us the means to test an input to see if a feature is
+present. We use a kernel to represent a feature. Sliding the kernel across the
+image and comparing it to each position produces a similarity score at every
+location, giving us a feature map. That feature map is then summarized, pooled,
+to get a single quantification of how strongly that feature is present in the
+input. The different pooling methods correspond to different interpretations of
+feature presence.
+
+Suppose we want to know if an image has an X or an O.
 | X | O |
 |-|-|
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/o.png" style="height: 1in;"> |
 
-# Kernels, Feature Maps, and Pooling
-## An X has diagonal lines
+What distinguishes an X from an O?
+
+- An X has diagonal lines
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_back_diagonal.png" style="height: 1in;"> | <img src="img/xo/x.kernel_back_diagonal.png" style="height: 1in;"> | 3.0 | 1.67 |
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_fwd_diagonal.png" style="height: 1in;"> | <img src="img/xo/x.kernel_fwd_diagonal.png" style="height: 1in;"> | 3.0 | 1.67 |
-## An O does not have diagonal lines
+
+- An O does not have diagonal lines
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_back_diagonal.png" style="height: 1in;"> | <img src="img/xo/o.kernel_back_diagonal.png" style="height: 1in;"> | 2.0 | 0.83 |
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_fwd_diagonal.png" style="height: 1in;"> | <img src="img/xo/o.kernel_fwd_diagonal.png" style="height: 1in;"> | 2.0 | 0.83 |
-## An O has curves.
+
+- An O has curves.
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_topl_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_topl_curve.png" style="height: 1in;"> | 4.0 | 1.4 |
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_botr_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_botr_curve.png" style="height: 1in;"> | 4.0 | 1.4 |
-## An X does not have curves.
+
+- An X does not have curves.
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_topl_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_topl_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_botr_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_botr_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
-## X has a set pixel in the corner.
+
+- X has a set pixel in the corner.
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/o.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.33 |
