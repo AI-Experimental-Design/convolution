@@ -72,7 +72,9 @@ for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
     png="${path}/${base}.png"
     python src/make_img.py \
         -i $txt \
-        -o $png
+        -o $png \
+        --height 1 \
+        --width 1
 done
 
 os=$(ls out/xo/demo_set/o_*png)
@@ -162,8 +164,7 @@ In the end we get:
 
 | Kernel | Bias |
 |-|-|
-| ![](out/xo/xo_learned.kernel.png) | -4.335400581359863 |
-
+| <img src="out/xo/xo_learned.kernel.png" style="height: 1in;"> | -4.335400581359863 |
 
 <details>
 
@@ -218,21 +219,16 @@ python src/plot_training_log.py \
 Now we can take a few images that were not part of the training set to
 see how well it works.
 
-| Input | Max Pooling | P(X) | 
-| - | - | - | 
-| ![](out/xo/demo_set/x_000.png) |  6.83 | 0.99 | 
-
-| Input | Max Pooling | P(X) | 
+| Input | Max score + bias | P(X) |
 | - | - | - |
-| ![](out/xo/demo_set/x_000.png) | 6.83 | 0.99 |
-| ![](out/xo/demo_set/x_001.png) | 6.83 | 0.99 |
-| ![](out/xo/demo_set/x_002.png) | 6.83 | 0.99 |
-| ![](out/xo/demo_set/x_003.png) | 4.72 | 0.99 |
-| ![](out/xo/demo_set/o_000.png) | 1.56 | 0.82 |
-| ![](out/xo/demo_set/o_001.png) | 3.84 | 0.97 |
-| ![](out/xo/demo_set/o_002.png) | 2.03 | 0.88 |
-| ![](out/xo/demo_set/o_003.png) | 2.03 | 0.88 |
-
+| <img src="out/xo/demo_set/x_000.png" style="height: 1in;"> | 2.50 | 0.92 |
+| <img src="out/xo/demo_set/x_001.png" style="height: 1in;"> | 2.50 | 0.92 |
+| <img src="out/xo/demo_set/x_002.png" style="height: 1in;"> | 2.50 | 0.92 |
+| <img src="out/xo/demo_set/x_003.png" style="height: 1in;"> | 0.39 | 0.59 |
+| <img src="out/xo/demo_set/o_000.png" style="height: 1in;"> | -2.77 | 0.05 |
+| <img src="out/xo/demo_set/o_001.png" style="height: 1in;"> | -0.49 | 0.37 |
+| <img src="out/xo/demo_set/o_002.png" style="height: 1in;"> | -2.30 | 0.09 |
+| <img src="out/xo/demo_set/o_003.png" style="height: 1in;"> | -2.30 | 0.09 |
 
 <details>
 
