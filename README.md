@@ -347,8 +347,7 @@ of its mistakes but gets more confident in the things it already gets correct.
 No setting of the kernel and bias values will fix those remaining mistakes.
 The model has reached the performance ceiling of a model with just a single
 kernel and bias. To get better accuracy we would need a bigger model with more
-parameters. Options include a bigger kernel, more kernels, a nonlinearity
-between the convolution and the pooling step, or more layers stacked together.
+parameters. Possible options are to use a bigger kernel or use  more kernels.
 
 Flat accuracy and falling loss is also a signature of overfitting. The model
 is getting more confident about the specific training examples it has
@@ -430,3 +429,78 @@ for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
 done
 ```
 </details>
+
+## Bigger 4x4 Kernel
+
+
+| Kernel | Training Curve |
+|-|-|
+| <img src="out/xo/xo_learned.4k.kernel.png" style="height: 3in;"> | <img src="img/xo/xo_learned_training.4k.png" style="height: 3in;"> |
+
+Going from a 3x3 to a 4x4 kernel moves the model from 10 to 17 parameters,
+improved the performance ceiling, but still had overfitting issues. Accuracy
+was 0.992 by epoch 50, which corsponds to the model is only misclassifying 1
+out of the training images. Some one the ones it had trouble with include:
+
+
+| <img src="out/xo/training_set/x_045.png" style="height: 3in;"> | <img src="out/xo/training_set/x_032.png" style="height: 3in;"> |  <img src="out/xo/training_set/x_013.png" style="height: 3in;"> |
+
+
+The shape of the curves is similar, meaning the model has run out of
+correctable mistakes and spends most training improving its confidence.  While
+extra capacity lets the kernel fit noise as well as signal, it may now be large
+enough to partially memorize the specific 128 training augmentations, rather
+than learning the pattern better. The held-out evaluation will help determine
+if the model is overfitting.
+
+<details>
+
+```
+python src/train_xo_kernel.py \
+  --train out/xo/training_set/train.tsv \
+  --out_prefix out/xo/xo_learned.4k \
+  --kernel 4 \
+  --pool max \
+  --epochs 200 \
+  --lr 0.1
+epoch 0001 loss=0.7130 acc=0.500  meanP(X)=0.596 meanP(O)=0.596
+epoch 0010 loss=0.6538 acc=0.891  meanP(X)=0.538 meanP(O)=0.497
+epoch 0020 loss=0.5749 acc=0.859  meanP(X)=0.631 meanP(O)=0.495
+epoch 0030 loss=0.4354 acc=0.961  meanP(X)=0.733 meanP(O)=0.421
+epoch 0040 loss=0.3298 acc=0.969  meanP(X)=0.774 meanP(O)=0.320
+epoch 0050 loss=0.2719 acc=0.992  meanP(X)=0.793 meanP(O)=0.253
+epoch 0060 loss=0.2342 acc=0.992  meanP(X)=0.825 meanP(O)=0.225
+epoch 0070 loss=0.2085 acc=0.992  meanP(X)=0.843 meanP(O)=0.203
+epoch 0080 loss=0.1895 acc=0.992  meanP(X)=0.852 meanP(O)=0.181
+epoch 0090 loss=0.1747 acc=0.992  meanP(X)=0.864 meanP(O)=0.168
+epoch 0100 loss=0.1627 acc=0.992  meanP(X)=0.872 meanP(O)=0.156
+epoch 0110 loss=0.1526 acc=0.992  meanP(X)=0.879 meanP(O)=0.147
+epoch 0120 loss=0.1441 acc=0.992  meanP(X)=0.886 meanP(O)=0.139
+epoch 0130 loss=0.1366 acc=0.992  meanP(X)=0.890 meanP(O)=0.132
+epoch 0140 loss=0.1301 acc=0.992  meanP(X)=0.895 meanP(O)=0.125
+epoch 0150 loss=0.1243 acc=0.992  meanP(X)=0.900 meanP(O)=0.120
+epoch 0160 loss=0.1191 acc=0.992  meanP(X)=0.904 meanP(O)=0.115
+epoch 0170 loss=0.1145 acc=0.992  meanP(X)=0.907 meanP(O)=0.111
+epoch 0180 loss=0.1103 acc=0.992  meanP(X)=0.910 meanP(O)=0.107
+epoch 0190 loss=0.1064 acc=0.992  meanP(X)=0.913 meanP(O)=0.103
+epoch 0200 loss=0.1029 acc=0.992  meanP(X)=0.916 meanP(O)=0.100
+learned bias: -4.417042255401611
+python src/plot_training_log.py \
+  -i out/xo/xo_learned.kernel.4k.log \
+  -o img/xo/xo_learned_training.4k.png \
+  --title "OneKernelNet training (4x4 kernel)"
+
+for i in $(ls out/xo/training_set/*txt); do
+    echo $i
+    python src/img_conv.py \
+        -i $i \
+        -k out/xo/xo_learned.4k.kernel.txt \
+        -o /dev/null \
+        -b -4.417042255401611
+done
+```
+
+</details>
+
+## More Kernels
+
