@@ -247,6 +247,7 @@ python src/make_img.py \
 ```
 
 </details>
+
 ## Training
 
 Real inputs have subtle and complex features nd guessing good kernel values by
