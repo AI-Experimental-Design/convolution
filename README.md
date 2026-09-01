@@ -444,6 +444,7 @@ out of the training images. Some one the ones it had trouble with include:
 
 
 | Label | Input | P(X) |
+|-|-|-|
 | <img src="out/xo/training_set/x_045.png" style="height: 3in;"> | X | 0.074 |
 | <img src="out/xo/training_set/x_008.png" style="height: 3in;"> | X | 0.2 |
 | <img src="out/xo/training_set/x_055.png" style="height: 3in;"> | X | 0.1 |
