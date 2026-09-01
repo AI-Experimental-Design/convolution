@@ -220,7 +220,7 @@ X has a set pixel in the corner?
 
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
-| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/o.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.33 |
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/x.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.33 |
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/o.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.4 |
 
 <details>
