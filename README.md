@@ -44,7 +44,6 @@ We want to know if an image has an X or an O.
 
 ## Generate training set
 
-## Train
 
 ### Data Augmentation
 Since we do not have a dataset of Xs and Os, we can use data augmentation to
@@ -84,4 +83,170 @@ magick $xs +append  out/xo/demo_set/xs.png
 ```
 
 </details>
+
+## Train
+
+To train, we need to build a small neural network around our kernel. With that
+there are a few new components. First, in addition to the values in the kernel,
+we will also learn a single bias number that will be added to each element in
+the feature map before pooling. And finally, we will use a function called
+sigmoid to convert the pooled score into a probability. Since we want to find a
+kernel that helps us tell if an image is an X or an O, the specific task we
+will learn is the probability that the image is an X. A low score and low
+probability suggests an O. A high score (and high probability) suggests an X.
+
+We start with a kernel of random values. Then we run every image in our
+training set through the network. For each image we get a pooled value (here
+we're just doing max pooling) and with the sigmoid the probability the image is
+an X. Ideally X's should be close to 1 and O's close to 0. The distance from
+those ideal values is called the loss and it tells us how far off we are. Here
+we use the binary cross-entropy loss, which penalizes confidently wrong results
+(a probability near 0 for an X, or near 1 for an O) more than less confident
+misses.
+
+With the loss we then update the kernel values and the bias using gradient
+descent. Gradient descent determines which direction to change the kernel
+weights and bias to make the estimate a closer to correct, and then takes a
+small step in that direction based on the learning rate. All of that is one epoch.
+We repeat these steps and the kernel values gradually move toward values that
+give probabilities that ideally separate X's from O's.
+
+
+At each epoch we get a report of what was learned:
+```
+epoch 0001 loss=0.6858 acc=0.500  meanP(X)=0.631 meanP(O)=0.598
+```
+
+- `loss`: the binary cross-entropy loss
+- `acc`: accuracy, the fraction of training images classified correctly
+- `meanP(X)`: the average predicted probability of being an X for all X's
+- `meanP(O)`: the average predicted probability of being an X for all O's
+
+At epoch 1 the kernel and bias are random, and it seems that these random numbers
+seem to be saying that most images are and X. Since half the images are Os, the
+accurancy is 0.5.
+
+At epoch 1 the kernel and bias are random. These random numbers are tend to
+classify most images as an X. Both `meanP(X)` and `meanP(O)` are above 0.5,
+it's guessing X for everything. Since half the images are Os, the accurancy is
+0.5.
+
+In the final epoch we get:
+```
+epoch 0200 loss=0.3497 acc=0.836  meanP(X)=0.748 meanP(O)=0.272
+```
+The loss is about half of what it was to start so the predictions are closer to
+correct. The probablies tend to be high for X inputs and low for O inputs.
+
+By looking at how these values evolved we can learn important characteristics
+of the model.
+
+![](img/xo/xo_learned_training.png)
+
+Here, accuracy is flat at 0.836 after about epoch 40 while the other values
+continue to improve. That is, after epoch 40, the model does not fix any more
+of its mistakes but gets more confident in the things it already gets correct.
+No setting of the kernel and bias values will fix those remaining mistakes.
+The model has reached the performance ceiling of a model with just a single
+kernel and bias. To get better accuracy we would need a bigger model with more
+parameters. Options include a bigger kernel, more kernels, a nonlinearity
+between the convolution and the pooling step, or more layers stacked together.
+
+Flat accuracy and falling loss is also a signature of overfitting. The model
+is getting more confident about the specific training examples it has
+memorized, rather than learning anything more general. Since both explanations
+produce the same training curve, we need a held-out evaluation to tell which
+one is happening.
+
+In the end we get:
+
+| Kernel | Bias |
+|-|-|
+| ![](out/xo/xo_learned.kernel.png) | -4.335400581359863 |
+
+
+<details>
+
+```bash
+python src/make_xo_dataset.py \
+    -o out/xo/training_set \
+    --x_path data/xo/inputs/x.txt \
+    --o_path data/xo/inputs/o.txt \
+    --n_per_class 64 
+
+python src/train_xo_kernel.py \
+  --train out/xo/training_set/train.tsv \
+  --out_prefix out/xo/xo_learned \
+  --kernel 3 \
+  --pool max \
+  --epochs 200 \
+  --lr 0.1
+
+epoch 0001 loss=0.6858 acc=0.500  meanP(X)=0.631 meanP(O)=0.598
+epoch 0010 loss=0.6357 acc=0.758  meanP(X)=0.560 meanP(O)=0.497
+epoch 0020 loss=0.5826 acc=0.750  meanP(X)=0.618 meanP(O)=0.489
+epoch 0030 loss=0.5359 acc=0.758  meanP(X)=0.626 meanP(O)=0.441
+epoch 0040 loss=0.4989 acc=0.836  meanP(X)=0.648 meanP(O)=0.412
+epoch 0050 loss=0.4704 acc=0.836  meanP(X)=0.669 meanP(O)=0.392
+epoch 0060 loss=0.4484 acc=0.836  meanP(X)=0.679 meanP(O)=0.369
+epoch 0070 loss=0.4312 acc=0.836  meanP(X)=0.692 meanP(O)=0.355
+epoch 0080 loss=0.4173 acc=0.836  meanP(X)=0.701 meanP(O)=0.341
+epoch 0090 loss=0.4060 acc=0.836  meanP(X)=0.707 meanP(O)=0.329
+epoch 0100 loss=0.3966 acc=0.836  meanP(X)=0.714 meanP(O)=0.320
+epoch 0110 loss=0.3886 acc=0.836  meanP(X)=0.720 meanP(O)=0.312
+epoch 0120 loss=0.3818 acc=0.836  meanP(X)=0.724 meanP(O)=0.305
+epoch 0130 loss=0.3759 acc=0.836  meanP(X)=0.728 meanP(O)=0.299
+epoch 0140 loss=0.3707 acc=0.836  meanP(X)=0.732 meanP(O)=0.294
+epoch 0150 loss=0.3661 acc=0.836  meanP(X)=0.735 meanP(O)=0.289
+epoch 0160 loss=0.3621 acc=0.836  meanP(X)=0.739 meanP(O)=0.285
+epoch 0170 loss=0.3585 acc=0.836  meanP(X)=0.741 meanP(O)=0.281
+epoch 0180 loss=0.3553 acc=0.836  meanP(X)=0.744 meanP(O)=0.277
+epoch 0190 loss=0.3524 acc=0.836  meanP(X)=0.746 meanP(O)=0.274
+epoch 0200 loss=0.3497 acc=0.836  meanP(X)=0.748 meanP(O)=0.272
+learned bias: -4.335400581359863
+
+python src/plot_training_log.py \
+  -i out/xo/xo_learned.kernel.log \
+  -o img/xo/xo_learned_training.png \
+  --title "OneKernelNet training"
+```
+
+</details>
+
+## Test
+
+Now we can take a few images that were not part of the training set to
+see how well it works.
+
+| Input | Max Pooling | P(X) | 
+| - | - | - | 
+| ![](out/xo/demo_set/x_000.png) |  6.83 | 0.99 | 
+
+| Input | Max Pooling | P(X) | 
+| - | - | - |
+| ![](out/xo/demo_set/x_000.png) | 6.83 | 0.99 |
+| ![](out/xo/demo_set/x_001.png) | 6.83 | 0.99 |
+| ![](out/xo/demo_set/x_002.png) | 6.83 | 0.99 |
+| ![](out/xo/demo_set/x_003.png) | 4.72 | 0.99 |
+| ![](out/xo/demo_set/o_000.png) | 1.56 | 0.82 |
+| ![](out/xo/demo_set/o_001.png) | 3.84 | 0.97 |
+| ![](out/xo/demo_set/o_002.png) | 2.03 | 0.88 |
+| ![](out/xo/demo_set/o_003.png) | 2.03 | 0.88 |
+
+
+<details>
+
+```bash
+for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
+    echo $txt
+    python src/img_conv.py \
+        -i $txt \
+        -k out/xo/xo_learned.kernel.txt \
+        -b -4.335400581359863 \
+        -o /dev/null
+done
+```
+
+</details>
+
 

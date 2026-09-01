@@ -1,0 +1,22 @@
+epoch 0001 loss=0.6858 acc=0.500  meanP(X)=0.631 meanP(O)=0.598
+epoch 0010 loss=0.6357 acc=0.758  meanP(X)=0.560 meanP(O)=0.497
+epoch 0020 loss=0.5826 acc=0.750  meanP(X)=0.618 meanP(O)=0.489
+epoch 0030 loss=0.5359 acc=0.758  meanP(X)=0.626 meanP(O)=0.441
+epoch 0040 loss=0.4989 acc=0.836  meanP(X)=0.648 meanP(O)=0.412
+epoch 0050 loss=0.4704 acc=0.836  meanP(X)=0.669 meanP(O)=0.392
+epoch 0060 loss=0.4484 acc=0.836  meanP(X)=0.679 meanP(O)=0.369
+epoch 0070 loss=0.4312 acc=0.836  meanP(X)=0.692 meanP(O)=0.355
+epoch 0080 loss=0.4173 acc=0.836  meanP(X)=0.701 meanP(O)=0.341
+epoch 0090 loss=0.4060 acc=0.836  meanP(X)=0.707 meanP(O)=0.329
+epoch 0100 loss=0.3966 acc=0.836  meanP(X)=0.714 meanP(O)=0.320
+epoch 0110 loss=0.3886 acc=0.836  meanP(X)=0.720 meanP(O)=0.312
+epoch 0120 loss=0.3818 acc=0.836  meanP(X)=0.724 meanP(O)=0.305
+epoch 0130 loss=0.3759 acc=0.836  meanP(X)=0.728 meanP(O)=0.299
+epoch 0140 loss=0.3707 acc=0.836  meanP(X)=0.732 meanP(O)=0.294
+epoch 0150 loss=0.3661 acc=0.836  meanP(X)=0.735 meanP(O)=0.289
+epoch 0160 loss=0.3621 acc=0.836  meanP(X)=0.739 meanP(O)=0.285
+epoch 0170 loss=0.3585 acc=0.836  meanP(X)=0.741 meanP(O)=0.281
+epoch 0180 loss=0.3553 acc=0.836  meanP(X)=0.744 meanP(O)=0.277
+epoch 0190 loss=0.3524 acc=0.836  meanP(X)=0.746 meanP(O)=0.274
+epoch 0200 loss=0.3497 acc=0.836  meanP(X)=0.748 meanP(O)=0.272
+learned bias: -4.335400581359863

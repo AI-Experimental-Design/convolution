@@ -1,0 +1,9 @@
+# label	path
+1	out/xo/demo_set/x_000.txt
+1	out/xo/demo_set/x_001.txt
+1	out/xo/demo_set/x_002.txt
+1	out/xo/demo_set/x_003.txt
+0	out/xo/demo_set/o_000.txt
+0	out/xo/demo_set/o_001.txt
+0	out/xo/demo_set/o_002.txt
+0	out/xo/demo_set/o_003.txt
