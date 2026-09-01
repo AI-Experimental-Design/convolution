@@ -263,7 +263,7 @@ python src/make_img.py \
 
 ## Training
 
-Real inputs have subtle and complex features nd guessing good kernel values by
+Real inputs have subtle and complex features and guessing good kernel values by
 hand doesn't scale. Instead of designing kernels, we can learn them directly
 from examples.
 
@@ -450,11 +450,10 @@ done
 |-|-|
 | <img src="out/xo/xo_learned.4k.kernel.png" style="height: 2in;"> | <img src="img/xo/xo_learned_training.4k.png" style="height: 3in;"> |
 
-Going from a 3x3 to a 4x4 kernel moves the model from 10 to 17 parameters,
-improved the performance ceiling, but still had overfitting issues. Accuracy
-was 0.992 by epoch 50, which corsponds to the model is only misclassifying 1
-out of the training images. Some one the ones it had trouble with include:
-
+Going from a 3x3 to a 4x4 kernel, moving the model from 10 to 17 parameters,
+improved the performance ceiling. Accuracy was 0.992 by epoch 50, meaning the
+model is only misclassifying 1 out of the training images. Some of the ones it
+had trouble with include:
 
 | Label | Input | P(X) |
 |-|-|-|
@@ -462,13 +461,12 @@ out of the training images. Some one the ones it had trouble with include:
 | X |<img src="out/xo/training_set/x_008.png" style="height: 1in;"> | 0.2 |
 | X |<img src="out/xo/training_set/x_055.png" style="height: 1in;"> | 0.1 |
 
-
 The shape of the curves is similar, meaning the model has run out of
-correctable mistakes and spends most training improving its confidence.  While
-extra capacity lets the kernel fit noise as well as signal, it may now be large
-enough to partially memorize the specific 128 training augmentations, rather
-than learning the pattern better. The held-out evaluation will help determine
-if the model is overfitting.
+correctable mistakes and spends most of training improving its confidence.
+While the extra capacity lets the kernel fit noise as well as signal, it may
+now be large enough to partially memorize the specific 128 training
+augmentations, rather than learning the pattern better. The held-out evaluation
+will help determine if the model is overfitting.
 
 <details>
 
