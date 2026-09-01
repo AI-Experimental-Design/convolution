@@ -8,6 +8,19 @@ to get a single quantification of how strongly that feature is present in the
 input. The different pooling methods correspond to different interpretations of
 feature presence.
 
+## Data representation
+
+## Data representation
+
+Our input and kernels are numerical matrices that we visualize using a color
+map, where darker red is more negative and darker blue is more positive. For
+example, these two representations correspond to the same kernel:
+
+| Numerical representation | Visual representation |
+|---|---|
+| `-0.374227  2.1048   -1.327`<br>`-1.4226   -3.05784  1.73665`<br>`-1.66425  2.989    -1.89938` | <img src="out/xo/xo_learned.kernel.png" style="height: 1in;"> |
+
+
 ## Kernels, Feature Maps, Pooling
 
 Suppose we want to know if an image has an X or an O.
