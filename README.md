@@ -435,7 +435,7 @@ done
 
 | Kernel | Training Curve |
 |-|-|
-| <img src="out/xo/xo_learned.4k.kernel.png" style="height: 3in;"> | <img src="img/xo/xo_learned_training.4k.png" style="height: 3in;"> |
+| <img src="out/xo/xo_learned.4k.kernel.png" style="height: 2in;"> | <img src="img/xo/xo_learned_training.4k.png" style="height: 3in;"> |
 
 Going from a 3x3 to a 4x4 kernel moves the model from 10 to 17 parameters,
 improved the performance ceiling, but still had overfitting issues. Accuracy
@@ -445,9 +445,9 @@ out of the training images. Some one the ones it had trouble with include:
 
 | Label | Input | P(X) |
 |-|-|-|
-| <img src="out/xo/training_set/x_045.png" style="height: 3in;"> | X | 0.074 |
-| <img src="out/xo/training_set/x_008.png" style="height: 3in;"> | X | 0.2 |
-| <img src="out/xo/training_set/x_055.png" style="height: 3in;"> | X | 0.1 |
+| <img src="out/xo/training_set/x_045.png" style="height: 1in;"> | X | 0.074 |
+| <img src="out/xo/training_set/x_008.png" style="height: 1in;"> | X | 0.2 |
+| <img src="out/xo/training_set/x_055.png" style="height: 1in;"> | X | 0.1 |
 
 
 The shape of the curves is similar, meaning the model has run out of
