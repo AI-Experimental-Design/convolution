@@ -1,60 +1,44 @@
-
 We want to know if an image has an X or an O.
 | X | O |
 |-|-|
-| ![](img/xo/x.png) | ![](img/xo/x.png) | 
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/o.png" style="height: 1in;"> |
 
-
-# Kernels, Feature Maps, and Poolimg
-## An X has diagnoal lines
-
+# Kernels, Feature Maps, and Pooling
+## An X has diagonal lines
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
-| ![](img/xo/x.png) | ![](img/xo/kernel_back_diagonal.png)| ![](img/xo/x.kernel_back_diagonal.png)| 3.0 | 1.67 |
-| ![](img/xo/x.png) | ![](img/xo/kernel_fwd_diagonal.png) | ![](img/xo/x.kernel_fwd_diagonal.png) | 3.0 | 1.67 |
-
-## An O does not have diagnoal lines
-
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_back_diagonal.png" style="height: 1in;"> | <img src="img/xo/x.kernel_back_diagonal.png" style="height: 1in;"> | 3.0 | 1.67 |
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_fwd_diagonal.png" style="height: 1in;"> | <img src="img/xo/x.kernel_fwd_diagonal.png" style="height: 1in;"> | 3.0 | 1.67 |
+## An O does not have diagonal lines
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
-| ![](img/xo/o.png) | ![](img/xo/kernel_back_diagonal.png)| ![](img/xo/o.kernel_back_diagonal.png)| 2.0 | 0.83 |
-| ![](img/xo/o.png) | ![](img/xo/kernel_fwd_diagonal.png) | ![](img/xo/o.kernel_fwd_diagonal.png) | 2.0 | 0.83 |
-
+| <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_back_diagonal.png" style="height: 1in;"> | <img src="img/xo/o.kernel_back_diagonal.png" style="height: 1in;"> | 2.0 | 0.83 |
+| <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_fwd_diagonal.png" style="height: 1in;"> | <img src="img/xo/o.kernel_fwd_diagonal.png" style="height: 1in;"> | 2.0 | 0.83 |
 ## An O has curves.
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
-| ![](img/xo/o.png) | ![](img/xo/kernel_topl_curve.png)| ![](img/xo/o.kernel_topl_curve.png) | 4.0 | 1.4 |
-| ![](img/xo/o.png) | ![](img/xo/kernel_botr_curve.png) | ![](img/xo/o.kernel_botr_curve.png)| 4.0 | 1.4 |
-
-
+| <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_topl_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_topl_curve.png" style="height: 1in;"> | 4.0 | 1.4 |
+| <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_botr_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_botr_curve.png" style="height: 1in;"> | 4.0 | 1.4 |
 ## An X does not have curves.
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
-| ![](img/xo/x.png) | ![](img/xo/kernel_topl_curve.png)| ![](img/xo/o.kernel_topl_curve.png) | 3.0 | 1.3 |
-| ![](img/xo/x.png) | ![](img/xo/kernel_botr_curve.png) | ![](img/xo/o.kernel_botr_curve.png)| 3.0 | 1.3 |
-
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_topl_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_topl_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_botr_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_botr_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
 ## X has a set pixel in the corner.
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
-| ![](img/xo/x.png) | ![](img/xo/kernel_set_corner.png)| ![](img/xo/o.kernel_set_corner.png) | 1.0 | 0.33 |
-| ![](img/xo/o.png) | ![](img/xo/kernel_set_corner.png) | ![](img/xo/o.kernel_set_corner.png)| 1.0 | 0.4 |
-
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/o.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.33 |
+| <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/o.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.4 |
 
 # Training
-
 ## Generate training set
-
-
 ### Data Augmentation
 Since we do not have a dataset of Xs and Os, we can use data augmentation to
 create a training set.  We can take in our X and O and move them around.
-
-
 |Seed Image| Variants |
 |-|-|
-|![](img/xo/o.png)| ![](out/xo/demo_set/os.png) |
-|![](img/xo/x.png)| ![](out/xo/demo_set/xs.png) |
-
+| <img src="img/xo/o.png" style="height: 1in;"> | <img src="out/xo/demo_set/os.png" style="height: 1in;"> |
+| <img src="img/xo/x.png" style="height: 1in;"> | <img src="out/xo/demo_set/xs.png" style="height: 1in;"> |
 <details>
 
 ```bash
@@ -65,7 +49,6 @@ python src/make_xo_dataset.py \
     --n_per_class 4 \
     --max_shift 1 \
     --noise_p 0.0
-
 for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
     dir=$(dirname $txt)
     base=$(basename $txt .txt)
@@ -76,18 +59,14 @@ for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
         --height 1 \
         --width 1
 done
-
 os=$(ls out/xo/demo_set/o_*png)
 magick $os +append  out/xo/demo_set/os.png
-
 xs=$(ls out/xo/demo_set/x_*png)
 magick $xs +append  out/xo/demo_set/xs.png
 ```
-
 </details>
 
 ## Train
-
 To train, we need to build a small neural network around our kernel. With that
 there are a few new components. First, in addition to the values in the kernel,
 we will also learn a single bias number that will be added to each element in
@@ -113,24 +92,18 @@ small step in that direction based on the learning rate. All of that is one epoc
 We repeat these steps and the kernel values gradually move toward values that
 give probabilities that ideally separate X's from O's.
 
-
 At each epoch we get a report of what was learned:
 ```
 epoch 0001 loss=0.6858 acc=0.500  meanP(X)=0.631 meanP(O)=0.598
 ```
-
 - `loss`: the binary cross-entropy loss
 - `acc`: accuracy, the fraction of training images classified correctly
 - `meanP(X)`: the average predicted probability of being an X for all X's
 - `meanP(O)`: the average predicted probability of being an X for all O's
 
-At epoch 1 the kernel and bias are random, and it seems that these random numbers
-seem to be saying that most images are and X. Since half the images are Os, the
-accurancy is 0.5.
-
-At epoch 1 the kernel and bias are random. These random numbers are tend to
+At epoch 1 the kernel and bias are random. These random numbers tend to
 classify most images as an X. Both `meanP(X)` and `meanP(O)` are above 0.5,
-it's guessing X for everything. Since half the images are Os, the accurancy is
+it's guessing X for everything. Since half the images are Os, the accuracy is
 0.5.
 
 In the final epoch we get:
@@ -138,12 +111,12 @@ In the final epoch we get:
 epoch 0200 loss=0.3497 acc=0.836  meanP(X)=0.748 meanP(O)=0.272
 ```
 The loss is about half of what it was to start so the predictions are closer to
-correct. The probablies tend to be high for X inputs and low for O inputs.
+correct. The probabilities tend to be high for X inputs and low for O inputs.
 
 By looking at how these values evolved we can learn important characteristics
 of the model.
 
-![](img/xo/xo_learned_training.png)
+<img src="img/xo/xo_learned_training.png" style="height: 3in;">
 
 Here, accuracy is flat at 0.836 after about epoch 40 while the other values
 continue to improve. That is, after epoch 40, the model does not fix any more
@@ -161,11 +134,9 @@ produce the same training curve, we need a held-out evaluation to tell which
 one is happening.
 
 In the end we get:
-
 | Kernel | Bias |
 |-|-|
 | <img src="out/xo/xo_learned.kernel.png" style="height: 1in;"> | -4.335400581359863 |
-
 <details>
 
 ```bash
@@ -174,7 +145,6 @@ python src/make_xo_dataset.py \
     --x_path data/xo/inputs/x.txt \
     --o_path data/xo/inputs/o.txt \
     --n_per_class 64 
-
 python src/train_xo_kernel.py \
   --train out/xo/training_set/train.tsv \
   --out_prefix out/xo/xo_learned \
@@ -182,7 +152,6 @@ python src/train_xo_kernel.py \
   --pool max \
   --epochs 200 \
   --lr 0.1
-
 epoch 0001 loss=0.6858 acc=0.500  meanP(X)=0.631 meanP(O)=0.598
 epoch 0010 loss=0.6357 acc=0.758  meanP(X)=0.560 meanP(O)=0.497
 epoch 0020 loss=0.5826 acc=0.750  meanP(X)=0.618 meanP(O)=0.489
@@ -205,20 +174,16 @@ epoch 0180 loss=0.3553 acc=0.836  meanP(X)=0.744 meanP(O)=0.277
 epoch 0190 loss=0.3524 acc=0.836  meanP(X)=0.746 meanP(O)=0.274
 epoch 0200 loss=0.3497 acc=0.836  meanP(X)=0.748 meanP(O)=0.272
 learned bias: -4.335400581359863
-
 python src/plot_training_log.py \
   -i out/xo/xo_learned.kernel.log \
   -o img/xo/xo_learned_training.png \
   --title "OneKernelNet training"
 ```
-
 </details>
 
 ## Test
-
 Now we can take a few images that were not part of the training set to
 see how well it works.
-
 | Input | Max score + bias | P(X) |
 | - | - | - |
 | <img src="out/xo/demo_set/x_000.png" style="height: 1in;"> | 2.50 | 0.92 |
@@ -229,7 +194,6 @@ see how well it works.
 | <img src="out/xo/demo_set/o_001.png" style="height: 1in;"> | -0.49 | 0.37 |
 | <img src="out/xo/demo_set/o_002.png" style="height: 1in;"> | -2.30 | 0.09 |
 | <img src="out/xo/demo_set/o_003.png" style="height: 1in;"> | -2.30 | 0.09 |
-
 <details>
 
 ```bash
@@ -242,7 +206,4 @@ for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
         -o /dev/null
 done
 ```
-
 </details>
-
-
