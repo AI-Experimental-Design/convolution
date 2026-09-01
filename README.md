@@ -10,8 +10,6 @@ feature presence.
 
 ## Data representation
 
-## Data representation
-
 Our input and kernels are numerical matrices that we visualize using a color
 map, where darker red is more negative and darker blue is more positive. For
 example, these two representations correspond to the same kernel:
