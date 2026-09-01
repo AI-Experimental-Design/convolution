@@ -40,5 +40,40 @@ We want to know if an image has an X or an O.
 | ![](img/xo/o.png) | ![](img/xo/kernel_set_corner.png) | ![](img/xo/o.kernel_set_corner.png)| 1.0 | 0.4 |
 
 
+# Training
 
+## Generate training set
+
+## Train
+
+Since we do not have a dataset of Xs and Os, we can use data augmentation to
+create a training set.  We can take in our X and O and move them around.
+
+<details>
+
+|Seed Image| Variants |
+|-|-|
+|![](img/xo/o.png)| ![](out/xo/demo_set/o_000.png) ![](out/xo/demo_set/o_001.png) ![](out/xo/demo_set/o_002.png) ![](out/xo/demo_set/o_003.png) |
+|![](img/xo/x.png)| ![](out/xo/demo_set/x_000.png) ![](out/xo/demo_set/x_001.png) ![](out/xo/demo_set/x_002.png) ![](out/xo/demo_set/x_003.png) |
+
+```
+python src/make_xo_dataset.py \
+    -o out/xo/demo_set/ \
+    --x_path data/xo/inputs/x.txt \
+    --o_path data/xo/inputs/o.txt \
+    --n_per_class 4 \
+    --max_shift 1 \
+    --noise_p 0.0
+
+for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
+    dir=$(dirname $txt)
+    base=$(basename $txt .txt)
+    png="${path}/${base}.png"
+    python src/make_img.py \
+        -i $txt \
+        -o $png
+done
+```
+
+</details>
 
