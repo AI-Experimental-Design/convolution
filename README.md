@@ -49,13 +49,13 @@ We want to know if an image has an X or an O.
 Since we do not have a dataset of Xs and Os, we can use data augmentation to
 create a training set.  We can take in our X and O and move them around.
 
-<details>
 
 |Seed Image| Variants |
 |-|-|
 |![](img/xo/o.png)| ![](out/xo/demo_set/os.png) |
 |![](img/xo/x.png)| ![](out/xo/demo_set/xs.png) |
 
+<details>
 ```
 python src/make_xo_dataset.py \
     -o out/xo/demo_set/ \
@@ -74,12 +74,11 @@ for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
         -o $png
 done
 
-os=$(ls out/xo/demo_set/o*png)
+os=$(ls out/xo/demo_set/o_*png)
 magick $os +append  out/xo/demo_set/os.png
 
-xs=$(ls out/xo/demo_set/x*png)
-magick $os +append  out/xo/demo_set/xs.png
+xs=$(ls out/xo/demo_set/x_*png)
+magick $xs +append  out/xo/demo_set/xs.png
 ```
-
 </details>
 
