@@ -53,8 +53,8 @@ create a training set.  We can take in our X and O and move them around.
 
 |Seed Image| Variants |
 |-|-|
-|![](img/xo/o.png)| ![](out/xo/demo_set/o_000.png) ![](out/xo/demo_set/o_001.png) ![](out/xo/demo_set/o_002.png) ![](out/xo/demo_set/o_003.png) |
-|![](img/xo/x.png)| ![](out/xo/demo_set/x_000.png) ![](out/xo/demo_set/x_001.png) ![](out/xo/demo_set/x_002.png) ![](out/xo/demo_set/x_003.png) |
+|![](img/xo/o.png)| ![](out/xo/demo_set/os.png) |
+|![](img/xo/x.png)| ![](out/xo/demo_set/xs.png) |
 
 ```
 python src/make_xo_dataset.py \
@@ -73,6 +73,12 @@ for txt in $(cat out/xo/demo_set/train.tsv | grep -v "^#" | cut -f2); do
         -i $txt \
         -o $png
 done
+
+os=$(ls out/xo/demo_set/o*png)
+magick $os +append  out/xo/demo_set/os.png
+
+xs=$(ls out/xo/demo_set/x*png)
+magick $os +append  out/xo/demo_set/xs.png
 ```
 
 </details>
