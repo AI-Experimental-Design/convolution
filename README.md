@@ -165,13 +165,88 @@ An X does not have curves.
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_topl_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_topl_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_botr_curve.png" style="height: 1in;"> | <img src="img/xo/o.kernel_botr_curve.png" style="height: 1in;"> | 3.0 | 1.3 |
 
-X has a set pixel in the corner.
+<details>
+
+```
+python src/img_conv.py \
+    -i data/xo/inputs/x.txt \
+    -k data/xo/kernels/kernel_topl_curve.txt \
+    -o out/xo/x.kernel_topl_curve.txt
+Scores:
+  Max pooling  : 3.000000
+  Mean pooling : 1.333333
+
+After sigmoid (probability of X):
+  Max pooling  : 0.952574
+  Mean pooling : 0.791391
+
+python src/make_img.py \
+    -i out/xo/x.kernel_topl_curve.txt \
+    -o img/xo/x.kernel_topl_curve.png
+
+python src/img_conv.py \
+    -i data/xo/inputs/x.txt \
+    -k data/xo/kernels/kernel_botr_curve.txt \
+    -o out/xo/x.kernel_botr_curve.txt
+Scores:
+  Max pooling  : 3.000000
+  Mean pooling : 1.333333
+
+After sigmoid (probability of X):
+  Max pooling  : 0.952574
+  Mean pooling : 0.791391
+
+python src/make_img.py \
+    -i out/xo/x.kernel_botr_curve.txt \
+    -o img/xo/x.kernel_botr_curve.png
+```
+
+</details>
+
+X has a set pixel in the corner?
 
 | Input | Kernel | Feature Map | Max Pooling | Mean Pooling |
 |-|-|-|-|-|
 | <img src="img/xo/x.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/o.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.33 |
 | <img src="img/xo/o.png" style="height: 1in;"> | <img src="img/xo/kernel_set_corner.png" style="height: 1in;"> | <img src="img/xo/o.kernel_set_corner.png" style="height: 1in;"> | 1.0 | 0.4 |
 
+<details>
+
+```
+python src/img_conv.py \
+    -i data/xo/inputs/x.txt \
+    -k data/xo/kernels/kernel_set_corner.txt \
+    -o out/xo/x.kernel_set_corner.txt
+Scores:
+  Max pooling  : 1.000000
+  Mean pooling : 0.333333
+
+After sigmoid (probability of X):
+  Max pooling  : 0.731059
+  Mean pooling : 0.582570
+
+python src/make_img.py \
+    -i out/xo/x.kernel_set_corner.txt \
+    -o img/xo/x.kernel_set_corner.png
+
+python src/img_conv.py \
+    -i data/xo/inputs/o.txt \
+    -k data/xo/kernels/kernel_set_corner.txt \
+    -o out/xo/o.kernel_set_corner.txt
+Scores:
+  Max pooling  : 1.000000
+  Mean pooling : 0.416667
+
+After sigmoid (probability of X):
+  Max pooling  : 0.731059
+  Mean pooling : 0.602685
+
+python src/make_img.py \
+    -i out/xo/o.kernel_set_corner.txt \
+    -o img/xo/o.kernel_set_corner.png
+```
+
+</details>
 ## Training
 
 Real inputs have subtle and complex features nd guessing good kernel values by
