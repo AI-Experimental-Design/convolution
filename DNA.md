@@ -21,3 +21,9 @@ For DNA seqeunce a one-hot-encoding is
 | `T`	| `0 0 0 1` |
 
 
+With this one-hot encoding, a DNA sequnce of lenght L become a 4xL matrix
+
+| Sequence | One-hot representation |
+|-|-|
+| `GCATATAAATCG` | `0 0 1 0 1 0 1 1 1 0 0 0` <br> `0 1 0 0 0 0 0 0 0 0 1 0 <br> `1 0 0 0 0 0 0 0 0 0 0 1` <br> `0 0 0 1 0 1 0 0 0 1 0 0' |
+
