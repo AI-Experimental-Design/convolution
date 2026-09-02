@@ -50,6 +50,7 @@ is not required to be a one-hot encoding.
 | No TATA box | `ATCGGCTAGCA` | `1  2  2  1  3` | 3 | 1.8 | 0.953 | 0.858 |
 
 <details>
+
 ```
 python src/dna_conv.py \
     -i data/dna/tata_ex/inputs/tata_box_0.txt \
