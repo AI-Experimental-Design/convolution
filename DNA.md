@@ -92,3 +92,18 @@ After sigmoid (probability of motif):
     Mean pooling : 0.858149
 ```
 </details>
+
+This TATA kernel successfully differentiated between sequences that contain a
+TATA box and those that don't, correctly matching two different valid instances
+of the degenerate consensus.  Max pooling asks whether the motif appears
+anywhere in the sequence, and the TATA-box sequences had max pool scores of 7
+pooling, while neither non-TATA sequence had a max score over 3. Mean pooling
+asks how motif-like the sequence is on average. This also also separated the
+two, with scores around 4 and 2.
+
+The differentiation is less clear among the post-sigmoid probabilities, but
+this is expected with uncalibrated scores. In training, the model will learn a
+bias that recenters the sigmoid so match and non-match cases separate more
+clearly.
+
+## Training
