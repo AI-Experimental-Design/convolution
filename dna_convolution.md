@@ -133,6 +133,7 @@ while the rest use other structures.
   - move `ncbi_dataset.zip` into `data/dna/yeast/` and unzip
 - Get positive set
   - Upstream-of-TSS regions
+  
     </details>
     ```
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
@@ -149,6 +150,7 @@ while the rest use other structures.
     manifest: data/dna/yeast/training/tss/upstream/coords.tsv
     ```
     </details>
+
 - Get negative sets
   - Random sequence
     </details>
