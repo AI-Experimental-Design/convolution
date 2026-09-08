@@ -128,9 +128,13 @@ while the rest use other structures.
 ### Generate training set
 
 - Get the reference sequences and gene annotations from NCBI
+
+  <details>
   - https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000146045.2/
   - Get the RefSeq FASTA and GFF
   - move `ncbi_dataset.zip` into `data/dna/yeast/` and unzip
+  </details>
+
 - Get positive set
   - Upstream-of-TSS regions
     <details>
