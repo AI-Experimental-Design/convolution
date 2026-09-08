@@ -133,8 +133,8 @@ while the rest use other structures.
   - move `ncbi_dataset.zip` into `data/dna/yeast/` and unzip
 - Get positive set
   - Upstream-of-TSS regions
-  
-    </details>
+
+    <details>
 
     ```
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
