@@ -133,7 +133,6 @@ while the rest use other structures.
   - move `ncbi_dataset.zip` into `data/dna/yeast/` and unzip
 - Get positive set
   - Upstream-of-TSS regions
-
     <details>
 
     ```
@@ -155,7 +154,8 @@ while the rest use other structures.
 
 - Get negative sets
   - Random sequence
-    </details>
+    <details>
+
     ```
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
     python src/make_negatives_random_sequence.py \
@@ -166,9 +166,11 @@ while the rest use other structures.
     base probabilities (from genome): A=0.310, C=0.191, G=0.191, T=0.309
     wrote 6020 random_sequence negatives (length 200) -> data/dna/yeast/training/tss/negatives/random_sequence
     ```
+
     </details>
   - Random intervals
-    </details>
+    <details>
+
     ```
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
     python src/make_negatives_random_interval.py \
@@ -178,9 +180,11 @@ while the rest use other structures.
         --seed 0
     wrote 6020 random_interval negatives (length 200) -> data/dna/yeast/training/tss/negatives/random_interval
     ```
+
     </details>
   - Gene body
-    </details>
+    <details>
+
     ```
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
     python src/make_negatives_gene_body.py \
@@ -192,4 +196,5 @@ while the rest use other structures.
     window length: 200, buffer: 200 bp past TSS, candidate genes: 6021
     wrote 6020 gene_body negatives (length 200) -> data/dna/yeast/training/tss/negatives/gene_body
     ```
+
     </details>
