@@ -109,23 +109,28 @@ clearly.
 
 ## Training
 
+### Generate training set
+
 There is a lot of genomic data, so there is no need here for data augmentation.
 We just need to pick positive and negative examples. Since TATA boxes are in
 the gene promoter region, we can use regions that are upstream of a gene as
-positives. So all we need is a reference genome and a set of gene annotations.
-NCBI has thousands of these. Here we will use yeast since it is small (12 Mb),
-well characterized, and there are many strains to choose from. For training we
-will use the most common lab strain, Saccharomyces cerevisiae. Yeast promoter
-biology is also some of the best studied, so we can compare our results to the
-literature. For example, only about 20% of the yeast genes have a TATA box,
-while the rest use other structures.
-([Basehoar et.  al](https://linkinghub.elsevier.com/retrieve/pii/S0092867404002053)).
+positives. To get these sequences, we need a reference genome and a set of gene
+annotations. NCBI has thousands of these. Here we will use yeast since it is
+small (12 Mb), well characterized, and there are many strains to choose from.
+For training we will use the most common lab species, Saccharomyces cerevisiae.
+Yeast promoter biology is also some of the best studied, so we can compare our
+results to the literature. For example, only about 20% of the yeast genes have
+a TATA box, while the rest use other structures ([Basehoar et
+al.](https://linkinghub.elsevier.com/retrieve/pii/S0092867404002053)).
 
+These promoter sequences will constitute our positive set. Training requires a
+negative set, which ideally would be sequences that do not contain TATA boxes.
+While there are many options for a negative set, care must be taken because the
+structure of the negative set will determine what the model learns. To ensure
+that it learns promoter-specific sequences, the negative set should closely
+match the structure of the positive set. As we will see, deviations from this
+matched structure result in the model learning some shortcut.
 
-
-
-
-### Generate training set
 
 - Get the reference sequences and gene annotations from NCBI
 
@@ -137,6 +142,17 @@ while the rest use other structures.
 
 - Get positive set
   - Upstream-of-TSS regions
+    - We get the strand and position of the genes in the GFF, then grab the up
+      and downstream of the gene as defined by the `--upstream` and
+      `--downstream` parameters. Strand determines if this window is just
+      before or just after the gene in the linear reference. We take the
+      reverse complement for negative strand genes.
+    - Since the GFF often gives the gene boundaries as the ORF, from start
+      codon to in-frame stop codon, and not the experimentally derived TSS,
+      we have to make the upstream component long enough to account for the
+      UTR (which is typically about 50bp,
+      [Nagalakshmi et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC2951732/))
+      and the TATA box.
     <details>
 
     ```
@@ -158,6 +174,15 @@ while the rest use other structures.
 
 - Get negative sets
   - Random sequence
+    - Generate random sequences Using the nucleotide frequency distribution
+      derived from the reference. 
+    - Sine the genome is not random, we expect the model to quickly
+      differentiage betweeen random and not, without leanring anything about
+      TATA boxes. Yeast promoters are more AT-rich than the rest of the genome,
+      so it is possible that the model learns to just predict that property.
+    - We can test this with test seuences that are AT-rich with a TATA box,
+      AT-rich without one, GC-balanced with a TATA box, and GC-balanced without
+      one.
     <details>
 
     ```
@@ -173,8 +198,18 @@ while the rest use other structures.
 
     </details>
   - Random intervals
+    - Sample real genomic windows, weighted by chromosome length, excluding any
+      window that overlaps a TSS window.
+    - Since our annotation only marks gene and ORF boundaries, not real TSS or
+      TATA box locations, some random intervals could overlap an unannotated
+      promoter and contain a TATA box.
+    - The random intervals will be a mix of coding and non-coding sequence, and
+      the model could learn to separate coding from noncoding rather than TATA
+      from not. Yeast has far more coding sequence than human, so the effect
+      may be lower.
+    - We can test this by comparing performance on held-out coding and
+      noncoding sequences to see if the kernel differentiates the two.
     <details>
-
     ```
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
     python src/make_negatives_random_interval.py \
@@ -187,6 +222,23 @@ while the rest use other structures.
 
     </details>
   - Gene body
+    - Sample from inside the same annotated genes as the positives, offset past
+      a buffer downstream of the TSS so they don't overlap a true positive
+      window.
+    - Since these come from the same genes, they should share similar sequence
+      and structural properties.
+    - The primary issue is leakage. In this setup, each gene provides negative
+      and positive sequences. Abstractly, our training has two training
+      elements that are subsequences of the same larger sequence, which are
+      likely to have similar sequence and structure. If the train/test split
+      puts one of a gene's sequences in training and the other in test, the
+      model could effectively be tested on a gene it already saw during
+      training. Correct classification in that case might reflect memorizing
+      that gene's sequence, not a decision based on the presence or absence of
+      a promoter. The solution is to split train and test by gene rather than
+      by individual sequence, assigning each gene to either the train or the
+      test set before any sequences are extracted, so all of a gene's positive
+      and negative windows end up on either train or test and not both.
     <details>
 
     ```
@@ -202,3 +254,4 @@ while the rest use other structures.
     ```
 
     </details>
+### Train
