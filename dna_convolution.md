@@ -285,6 +285,13 @@ matched structure result in the model learning some shortcut.
     -i out/dna/random_sequence/random_sequence.kernel.log \
     -o out/dna/random_sequence/random_sequence.kernel.log.png \
     --title "Random Sequence Training"
+
+  python src/make_img.py \
+    -i out/dna/random_sequence/random_sequence.kernel.txt \
+    -o out/dna/random_sequence/random_sequence.kernel.png \
+    --vmin -1.03307 \
+    --vmax 1.03307
+
   ``` 
 
   </details>
@@ -319,6 +326,12 @@ matched structure result in the model learning some shortcut.
     -i out/dna/random_interval/random_interval.kernel.log \
     -o out/dna/random_interval/random_interval.kernel.log.png \
     --title "Random Interval Training"
+
+  python src/make_img.py \
+    -i out/dna/random_interval/random_interval.kernel.txt \
+    -o out/dna/random_interval/random_interval.kernel.png \
+    --vmin -1.03307 \
+    --vmax 1.03307
   ```
 
   </details>
@@ -352,6 +365,12 @@ matched structure result in the model learning some shortcut.
     -i out/dna/gene_body/gene_body.kernel.log \
     -o out/dna/gene_body/gene_body.kernel.log.png \
     --title "Gene Body Training"
+
+  python src/make_img.py \
+    -i out/dna/gene_body/gene_body.kernel.txt \
+    -o out/dna/gene_body/gene_body.kernel.png \
+    --vmin -1.03307 \
+    --vmax 1.03307
   ``` 
 
   </details>
