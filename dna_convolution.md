@@ -257,6 +257,11 @@ matched structure result in the model learning some shortcut.
 ### Train
 
 - Random sequence
+
+  |  Kernel | Training plot |
+  |-|-|
+  | ![](out/dna/random_sequence/random_sequence.kernel.png) | ![](out/dna/random_sequence/random_sequence.kernel.log.png) |
+
   <details>
 
   ``` 
@@ -285,6 +290,11 @@ matched structure result in the model learning some shortcut.
   </details>
 
 - Random intervals
+
+  |  Kernel | Training plot |
+  |-|-|
+  | ![](out/dna/random_interval/random_interval.kernel.png) | ![](out/dna/random_interval/random_interval.kernel.log.png) |
+
   <details>
 
   ```
