@@ -260,7 +260,7 @@ matched structure result in the model learning some shortcut.
 
   |  Kernel | Training plot |
   |-|-|
-  | ![](out/dna/random_sequence/random_sequence.kernel.png) | ![](out/dna/random_sequence/random_sequence.kernel.log.png) |
+  | <img src="out/dna/random_sequence/random_sequence.kernel.png" style="height: 2in;"> | <img src="out/dna/random_sequence/random_sequence.kernel.log.png" style="height: 2in;"> |
 
   <details>
 
@@ -300,7 +300,7 @@ matched structure result in the model learning some shortcut.
 
   |  Kernel | Training plot |
   |-|-|
-  | ![](out/dna/random_interval/random_interval.kernel.png) | ![](out/dna/random_interval/random_interval.kernel.log.png) |
+  | <img src="out/dna/random_interval/random_interval.kernel.png" style="height: 2in;"> | <img src="out/dna/random_interval/random_interval.kernel.log.png" style="height: 2in;"> |
 
   <details>
 
@@ -340,7 +340,7 @@ matched structure result in the model learning some shortcut.
 
   |  Kernel | Training plot |
   |-|-|
-  | ![](out/dna/gene_body/gene_body.kernel.png) | ![](out/dna/gene_body/gene_body.kernel.log.png) |
+  | <img src="out/dna/gene_body/gene_body.kernel.png" style="height: 2in;"> | <img src="out/dna/gene_body/gene_body.kernel.log.png" style="height: 2in;"> |
   <details>
 
   ```
