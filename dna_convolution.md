@@ -255,3 +255,93 @@ matched structure result in the model learning some shortcut.
 
     </details>
 ### Train
+
+- Random sequence
+  <details>
+
+  ``` 
+  python src/build_train_test_split.py \
+      -p data/dna/yeast/training/tss/upstream/coords.tsv \
+      -n data/dna/yeast/training/tss/negatives/random_sequence/coords.tsv \
+      -o data/dna/yeast/training/splits/random_sequence \
+      --test_frac 0.2 \
+      --seed 0
+  genes total: 6020  (test genes: 1204)
+  train: 4816 positive, 4816 negative -> data/dna/yeast/training/splits/random_sequence/train.tsv
+  test:  1204 positive, 1204 negative -> data/dna/yeast/training/splits/random_sequence/test.tsv
+  python src/train_tata_kernel.py \
+      --train data/dna/yeast/training/splits/random_sequence/train.tsv \
+      --test data/dna/yeast/training/splits/random_sequence/test.tsv \
+      --kernel 7 --pool max --epochs 200 --lr 0.1 --seed 0 \
+      --out_prefix out/dna/random_sequence/random_sequence \
+  > out/dna/random_sequence/random_sequence.kernel.log
+
+  python src/plot_tata_training_log.py \
+    -i out/dna/random_sequence/random_sequence.kernel.log \
+    -o out/dna/random_sequence/random_sequence.kernel.log.png \
+    --title "Random Sequence Training"
+  ``` 
+
+  </details>
+
+- Random intervals
+  <details>
+
+  ```
+  python src/build_train_test_split.py \
+      -p data/dna/yeast/training/tss/upstream/coords.tsv \
+      -n data/dna/yeast/training/tss/negatives/random_interval/coords.tsv \
+      -o data/dna/yeast/training/splits/random_interval \
+      --test_frac 0.2 \
+      --seed 0
+  genes total: 6020  (test genes: 1204)
+  train: 4816 positive, 4816 negative -> data/dna/yeast/training/splits/random_interval/train.tsv
+  test:  1204 positive, 1204 negative -> data/dna/yeast/training/splits/random_interval/test.tsv
+
+  python src/train_tata_kernel.py \
+      --train data/dna/yeast/training/splits/random_interval/train.tsv \
+      --test data/dna/yeast/training/splits/random_interval/test.tsv \
+      --kernel 7 --pool max --epochs 200 --lr 0.1 --seed 0 \
+      --out_prefix out/dna/random_interval/random_interval \
+  > out/dna/random_interval/random_interval.kernel.log
+
+  python src/plot_tata_training_log.py \
+    -i out/dna/random_interval/random_interval.kernel.log \
+    -o out/dna/random_interval/random_interval.kernel.log.png \
+    --title "Random Interval Training"
+  ```
+
+  </details>
+
+- Gene body
+
+  |  Kernel | Training plot |
+  |-|-|
+  | ![](out/dna/gene_body/gene_body.kernel.png) | ![](out/dna/gene_body/gene_body.kernel.log.png) |
+  <details>
+
+  ```
+  python src/build_train_test_split.py \
+      -p data/dna/yeast/training/tss/upstream/coords.tsv \
+      -n data/dna/yeast/training/tss/negatives/gene_body/coords.tsv \
+      -o data/dna/yeast/training/splits/gene_body \
+      --test_frac 0.2 \
+      --seed 0
+  genes total: 6021  (test genes: 1204)
+  train: 4816 positive, 4760 negative -> data/dna/yeast/training/splits/gene_body/train.tsv
+  test:  1204 positive, 1260 negative -> data/dna/yeast/training/splits/gene_body/test.tsv
+
+  python src/train_tata_kernel.py \
+      --train data/dna/yeast/training/splits/gene_body/train.tsv \
+      --test data/dna/yeast/training/splits/gene_body/test.tsv \
+      --kernel 7 --pool max --epochs 200 --lr 0.1 --seed 0 \
+      --out_prefix out/dna/gene_body/gene_body \
+  > out/dna/gene_body/gene_body.kernel.log
+
+  python src/plot_tata_training_log.py \
+    -i out/dna/gene_body/gene_body.kernel.log \
+    -o out/dna/gene_body/gene_body.kernel.log.png \
+    --title "Gene Body Training"
+  ``` 
+
+  </details>
