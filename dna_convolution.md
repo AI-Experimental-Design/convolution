@@ -454,13 +454,8 @@ python src/plot_tata_training_log.py \
     -o out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log.png \
     --title "Gene Body Training (2 kernels)"
 
-tail -n 6 out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log
+tail -n 1 out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log
 
-kernel 0 bias: -0.9133
-kernel 1 bias: -0.8047
-kernel 0 combine_weight=2.1564
-kernel 1 combine_weight=1.7305
-combine bias: -1.4628
 final test accuracy: 0.7301  (n=2464)
 ```
 
