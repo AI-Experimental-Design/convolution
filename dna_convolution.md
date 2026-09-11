@@ -439,7 +439,7 @@ done
   than 1. This is likely an unlucky seed, and training another 2-kernel model
   gets 0.730 test accuracy. 
 
-  </details>
+<details>
 
 ```bash
 python src/train_tata_multikernel.py \
@@ -467,9 +467,8 @@ final test accuracy: 0.7301  (n=2464)
 | Kernels | Training Curve | Learned Kernels |
 |---|---|---|
 | 2 | <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel1.png" style="height: 1.5in;"> |
-|
 
-<details>
+</details>
 
 - 4-20: Test accuracy consistently climbs, confirming a single kernel was
   underfitting the data.
