@@ -51,7 +51,7 @@ is not required to be a one-hot encoding.
 
 <details>
 
-```
+```bash
 python src/dna_conv.py \
     -i data/dna/tata_ex/inputs/tata_box_0.txt \
     -k data/dna/tata_ex/kernels/kernel_tata_box.txt 
@@ -155,7 +155,7 @@ matched structure result in the model learning some shortcut.
       and the TATA box.
     <details>
 
-    ```
+    ```bash
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
     python src/extract_upstream_tss.py \
       -f $dir/GCF_000146045.2_R64_genomic.fna \
@@ -185,7 +185,7 @@ matched structure result in the model learning some shortcut.
       one.
     <details>
 
-    ```
+    ```bash
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
     python src/make_negatives_random_sequence.py \
         -f $dir/GCF_000146045.2_R64_genomic.fna \
@@ -210,7 +210,7 @@ matched structure result in the model learning some shortcut.
     - We can test this by comparing performance on held-out coding and
       noncoding sequences to see if the kernel differentiates the two.
     <details>
-    ```
+    ```bash
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
     python src/make_negatives_random_interval.py \
         -f $dir/GCF_000146045.2_R64_genomic.fna \
@@ -241,7 +241,7 @@ matched structure result in the model learning some shortcut.
       and negative windows end up on either train or test and not both.
     <details>
 
-    ```
+    ```bash
     dir="data/dna/yeast/ncbi_dataset/data/GCF_000146045.2"
     python src/make_negatives_gene_body.py \
         -f $dir/GCF_000146045.2_R64_genomic.fna \
@@ -268,7 +268,7 @@ matched structure result in the model learning some shortcut.
 
   <details>
 
-  ``` 
+  ``` bash
   python src/build_train_test_split.py \
       -p data/dna/yeast/training/tss/upstream/coords.tsv \
       -n data/dna/yeast/training/tss/negatives/random_sequence/coords.tsv \
@@ -310,7 +310,7 @@ matched structure result in the model learning some shortcut.
     the positives (29.41%) than the negatives (30.70%).
     <details>
 
-    ```
+    ```bash
     $ cat data/dna/yeast/training/tss/negatives/random_interval/*txt | fold -w1 | sort | uniq -c
     371807 A
     231919 C
@@ -331,7 +331,7 @@ matched structure result in the model learning some shortcut.
 
   <details>
 
-  ```
+  ```bash
   python src/build_train_test_split.py \
       -p data/dna/yeast/training/tss/upstream/coords.tsv \
       -n data/dna/yeast/training/tss/negatives/random_interval/coords.tsv \
@@ -372,7 +372,7 @@ matched structure result in the model learning some shortcut.
   | <img src="out/dna/gene_body/gene_body.kernel.png" style="height: 2in;"> | <img src="out/dna/gene_body/gene_body.kernel.log.png" style="height: 3in;"> |
   <details>
 
-  ```
+  ```bash
   python src/build_train_test_split.py \
       -p data/dna/yeast/training/tss/upstream/coords.tsv \
       -n data/dna/yeast/training/tss/negatives/gene_body/coords.tsv \
@@ -405,7 +405,6 @@ matched structure result in the model learning some shortcut.
   </details>
 
 ## More Kernels
-
 | Kernels | Training Curve | Learned Kernels |
 |---|---|---|
 | 2 | <img src="out/dna/gene_body_k2/gene_body_k2.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k2/gene_body_k2.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k2/gene_body_k2.kernel1.png" style="height: 1.5in;"> |
@@ -413,6 +412,8 @@ matched structure result in the model learning some shortcut.
 | 4 | <img src="out/dna/gene_body_k4/gene_body_k4.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k4/gene_body_k4.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel1.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel2.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel3.png" style="height: 1.5in;"> |
 | 20 | <img src="out/dna/gene_body_k20/gene_body_k20.kernel.log.png" style="height: 3in;"> | |
 | 100 | <img src="out/dna/gene_body_k100/gene_body_k100.kernel.log.png" style="height: 3in;"> | |
+
+<details>
 
 ```bash
 mkdir -p out/dna/gene_body_k{2,3,4,20,100}
@@ -431,3 +432,50 @@ for k in 2 3 4 20 100; do
         --title "Gene Body Training (${k} kernels)"
 done
 ```
+
+</details>
+
+- 2: While more parameters generally helps, 2 kernels performed slightly worse
+  than 1. This is likely an unlucky seed, and training another 2-kernel model
+  gets 0.730 test accuracy. 
+
+  </details>
+
+```bash
+python src/train_tata_multikernel.py \
+    --train data/dna/yeast/training/splits/gene_body/train.tsv \
+    --test data/dna/yeast/training/splits/gene_body/test.tsv \
+    --num_kernels 2 --kernel 7 --pool max --epochs 200 --lr 0.1 --seed 1 \
+    --out_prefix out/dna/gene_body_k2v2/gene_body_k2v2 \
+    > out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log
+
+python src/plot_tata_training_log.py \
+    -i out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log \
+    -o out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log.png \
+    --title "Gene Body Training (2 kernels)"
+
+tail -n 6 out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log
+
+kernel 0 bias: -0.9133
+kernel 1 bias: -0.8047
+kernel 0 combine_weight=2.1564
+kernel 1 combine_weight=1.7305
+combine bias: -1.4628
+final test accuracy: 0.7301  (n=2464)
+```
+
+| Kernels | Training Curve | Learned Kernels |
+|---|---|---|
+| 2 | <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel1.png" style="height: 1.5in;"> |
+|
+
+<details>
+
+- 4-20: Test accuracy consistently climbs, confirming a single kernel was
+  underfitting the data.
+
+- 100: Training accuracy starts to separete from test accuray.
+  Test loss is still going down, so this isn't overfitting yet, but 
+  it is trending in that direction.
+
+
