@@ -460,9 +460,9 @@ tail -n 1 out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log
 final test accuracy: 0.7301  (n=2464)
 ```
 
-| Kernels | Training Curve | Learned Kernels |
+| Kernels | Training curve | Final test accuracy |
 |---|---|---|
-| 2 | <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel1.png" style="height: 1.5in;"> |
+| 2 | <img src="out/dna/gene_body_k2v2/gene_body_k2v2.kernel.log.png" style="height: 3in;"> | 0.7301 |
 
 </details>
 
