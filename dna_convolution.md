@@ -405,20 +405,21 @@ matched structure result in the model learning some shortcut.
   </details>
 
 ## More Kernels
-| Kernels | Training Curve | Learned Kernels |
+| Kernels | Training curve | Final test accuracy |
 |---|---|---|
-| 2 | <img src="out/dna/gene_body_k2/gene_body_k2.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k2/gene_body_k2.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k2/gene_body_k2.kernel1.png" style="height: 1.5in;"> |
-| 3 | <img src="out/dna/gene_body_k3/gene_body_k3.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k3/gene_body_k3.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k3/gene_body_k3.kernel1.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k3/gene_body_k3.kernel2.png" style="height: 1.5in;"> |
-| 4 | <img src="out/dna/gene_body_k4/gene_body_k4.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k4/gene_body_k4.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel1.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel2.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel3.png" style="height: 1.5in;"> |
-| 20 | <img src="out/dna/gene_body_k20/gene_body_k20.kernel.log.png" style="height: 3in;"> | |
-| 100 | <img src="out/dna/gene_body_k100/gene_body_k100.kernel.log.png" style="height: 3in;"> | |
+| 2 | <img src="out/dna/gene_body_k2/gene_body_k2.kernel.log.png" style="height: 3in;"> |  0.6416 |
+| 3 | <img src="out/dna/gene_body_k3/gene_body_k3.kernel.log.png" style="height: 3in;"> |  0.7001 |
+| 4 | <img src="out/dna/gene_body_k4/gene_body_k4.kernel.log.png" style="height: 3in;"> |  0.7033 |
+| 20 | <img src="out/dna/gene_body_k20/gene_body_k20.kernel.log.png" style="height: 3in;"> | 0.7926 |
+| 100 | <img src="out/dna/gene_body_k100/gene_body_k100.kernel.log.png" style="height: 3in;"> | 0.8360 |
+| 200 | <img src="out/dna/gene_body_k200/gene_body_k200.kernel.log.png" style="height: 3in;"> | 0.8377 |
 
 <details>
 
 ```bash
-mkdir -p out/dna/gene_body_k{2,3,4,20,100}
+mkdir -p out/dna/gene_body_k{2,3,4,20,100,200}
 
-for k in 2 3 4 20 100; do
+for k in 2 3 4 20 100 200; do
     python src/train_tata_multikernel.py \
         --train data/dna/yeast/training/splits/gene_body/train.tsv \
         --test data/dna/yeast/training/splits/gene_body/test.tsv \
@@ -472,4 +473,4 @@ final test accuracy: 0.7301  (n=2464)
   Test loss is still going down, so this isn't overfitting yet, but 
   it is trending in that direction.
 
-
+- 200: Test accuracy is only marginially better than 100 kernels, but the train/test gap is larger.
