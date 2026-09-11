@@ -256,8 +256,11 @@ matched structure result in the model learning some shortcut.
     </details>
 
 ### Train
-
 - Random sequence
+  - The curves are flat by epoch 60, meaning there was not much for the model
+    to learn from this negative set. The kernel's consensus sequence is
+    `TTTTCAT`, but most of the weights are close to zero so this isn't a real
+    signal.
 
   |  Kernel | Training plot |
   |-|-|
@@ -298,7 +301,30 @@ matched structure result in the model learning some shortcut.
   </details>
 
 - Random intervals
+  - The loss curve is still sloping down at epoch 200, so the model was not
+    finished learning. The consensus is `AAAAAAA`, which suggests the model
+    keyed on a shortcut of A-rich sequence rather than anything TATA-specific.
+    The nucleotide frequencies back this up, the upstream positives run 34.70%
+    A versus 30.88% A in the random_interval negatives, and it's specifically A
+    that's enriched, not AT in general, since T is actually slightly lower in
+    the positives (29.41%) than the negatives (30.70%).
+    <details>
 
+    ```
+    $ cat data/dna/yeast/training/tss/negatives/random_interval/*txt | fold -w1 | sort | uniq -c
+    371807 A
+    231919 C
+    230608 G
+    369666 T
+
+    $ cat data/dna/yeast/training/tss/upstream/*txt | fold -w1 | sort | uniq -c
+    417828 A
+    212727 C
+    219291 G
+    354154 T
+    ```
+
+    </details>
   |  Kernel | Training plot |
   |-|-|
   | <img src="out/dna/random_interval/random_interval.kernel.png" style="height: 2in;"> | <img src="out/dna/random_interval/random_interval.kernel.log.png" style="height: 3in;"> |
@@ -338,6 +364,8 @@ matched structure result in the model learning some shortcut.
   </details>
 
 - Gene body
+    - The model is still improving at epoch 200, and the consensus is
+      `TATATAA`, a genuine TATA box pattern.
 
   |  Kernel | Training plot |
   |-|-|
@@ -383,11 +411,13 @@ matched structure result in the model learning some shortcut.
 | 2 | <img src="out/dna/gene_body_k2/gene_body_k2.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k2/gene_body_k2.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k2/gene_body_k2.kernel1.png" style="height: 1.5in;"> |
 | 3 | <img src="out/dna/gene_body_k3/gene_body_k3.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k3/gene_body_k3.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k3/gene_body_k3.kernel1.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k3/gene_body_k3.kernel2.png" style="height: 1.5in;"> |
 | 4 | <img src="out/dna/gene_body_k4/gene_body_k4.kernel.log.png" style="height: 3in;"> | <img src="out/dna/gene_body_k4/gene_body_k4.kernel0.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel1.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel2.png" style="height: 1.5in;"> <img src="out/dna/gene_body_k4/gene_body_k4.kernel3.png" style="height: 1.5in;"> |
+| 20 | <img src="out/dna/gene_body_k20/gene_body_k20.kernel.log.png" style="height: 3in;"> | |
+| 100 | <img src="out/dna/gene_body_k100/gene_body_k100.kernel.log.png" style="height: 3in;"> | |
 
 ```bash
-mkdir -p out/dna/gene_body_k{2,3,4}
+mkdir -p out/dna/gene_body_k{2,3,4,20,100}
 
-for k in 2 3 4; do
+for k in 2 3 4 20 100; do
     python src/train_tata_multikernel.py \
         --train data/dna/yeast/training/splits/gene_body/train.tsv \
         --test data/dna/yeast/training/splits/gene_body/test.tsv \
@@ -401,42 +431,3 @@ for k in 2 3 4; do
         --title "Gene Body Training (${k} kernels)"
 done
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-k## Random sequence negatives
-
-**Training curve:** The real story here is the plateau, not the final number. Training and test both flatten out by around epoch 60 and barely move for the next 140 epochs. That shape means the kernel hit a ceiling early, this negative set gave it very little to work with, rather than the model just needing more time to keep climbing.
-
-**Learned kernel:** The consensus reads TTTTCAT, but most of the underlying weights are close to zero and position 5 lands on C, which breaks the TATA-like pattern entirely. Read together with the flat curve, this isn't a real motif, it's what a kernel looks like when it never found a stable signal to converge on.
-
-## Random interval negatives
-
-**Training curve:** Still drifting down gently at epoch 200, not flat. That means this run hadn't finished learning whatever it was going to learn, the 0.633 accuracy is a snapshot mid-improvement, not a ceiling.
-
-**Learned kernel:** The consensus is a flat AAAAAAA, every position favors A by about the same amount. That's a bulk composition counter, not a motif detector, it's a cruder rule than gene body's, yet it's reaching a similar accuracy, which is the reminder that the score alone can't tell you which kind of rule the model actually landed on.
-
-## Gene body negatives
-
-**Training curve:** Still improving at epoch 200 too, and by the largest margin of the three, loss and accuracy are both moving more per epoch here than in the other two runs even this late in training. That trajectory is consistent with a model that found something real to keep refining.
-
-**Learned kernel:** The consensus is TATATAA, which matches the textbook TATA box pattern TATAWAW (W being A or T). This is the one run where the curve's continued improvement and the kernel's shape agree, the model kept getting better because it was homing in on the actual biological motif, not a shortcut.
-
-## Putting it together
-
-The curve shapes and the kernels tell the same story from two different angles. The one run that plateaued early (random sequence) is also the one that never found a coherent kernel, the flat curve reflects a real information ceiling, not slow learning. The two runs still improving at epoch 200 (gene body and random interval) both found something to refine, just very different somethings, one the actual motif, one a crude composition shortcut, which is why accuracy alone ranks them close together even though what they learned isn't equivalent at all.
